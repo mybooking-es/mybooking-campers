@@ -44,6 +44,30 @@ function mybooking_camper_styles( ) {
 add_action( 'wp_enqueue_scripts', 'mybooking_camper_styles' );
 
 /**
+ * Enqueue gallery styles and scripts on single camper pages
+ *
+ * @since 1.0.7
+ */
+function mybooking_camper_gallery_frontend() {
+	if ( is_singular( 'camper' ) ) {
+		wp_enqueue_style(
+			'mybooking-campers-gallery-css',
+			plugin_dir_url( __FILE__ ) . 'includes/assets/css/mybooking-camper-gallery.css',
+			array(),
+			'1.0.0'
+		);
+		wp_enqueue_script(
+			'mybooking-campers-gallery-js',
+			plugin_dir_url( __FILE__ ) . 'includes/assets/js/mybooking-camper-gallery.js',
+			array( 'jquery' ),
+			'1.0.0',
+			true
+		);
+	}
+}
+add_action( 'wp_enqueue_scripts', 'mybooking_camper_gallery_frontend' );
+
+/**
  * Loads textdomain
  *
  * @since 1.0.0

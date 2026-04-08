@@ -56,7 +56,7 @@ get_header(); ?>
 	$camper_details_video = get_post_meta( $post->ID, 'camper-details-video', true );
 ?>
 
-<div id="content">
+<div class="mybooking-campers_single-content">
 	<?php while ( have_posts() ) : the_post(); ?>
 
     <article <?php post_class(); ?> id="post-<?php the_ID(); ?>">
@@ -159,27 +159,50 @@ get_header(); ?>
                 </div>
 							</div>
 						</div>
-
+					</div>
+          <div class="mb-row">
 						<!-- The body -->
 
 						<div class="mb-col-md-8">
 
 							<!-- The images -->
-							<?php if( $camper_details_photos_count !='' ) { ?>
-								<div class="mybooking-campers_carousel mybooking-product-carousel-inner">
-								<?php for( $i=0; $i<$camper_details_photos_count; $i++ ) { ?>
-									<div class="mybooking-carousel-item">
-  									<?php
-  									    $camper_photo = wp_get_attachment_image(
-  											$camper_details_photos_url_array[$i],
-  											'full',
-  											false,
-  											['src', 'alt', 'class' => 'mybooking-campers_carousel-img']
-  										);
-  										echo wp_kses_post( $camper_photo )
-                    ?>
+							<?php if( $camper_details_photos_count > 0 ) { ?>
+								<div class="mybooking-campers_gallery-container">
+									<!-- Main image -->
+									<div class="mybooking-campers_main-image">
+										<?php
+											$camper_main_image = wp_get_attachment_image(
+												$camper_details_photos_url_array[0],
+												'full',
+												false,
+												['class' => 'mybooking-campers_carousel-img', 'alt' => get_the_title()]
+											);
+											echo wp_kses_post( $camper_main_image );
+										?>
 									</div>
-								<?php } ?>
+
+									<!-- Thumbnails -->
+									<?php if ( $camper_details_photos_count > 1 ) { ?>
+										<div class="mybooking-campers_carousel">
+											<?php for( $i=0; $i<$camper_details_photos_count; $i++ ) { ?>
+												<div class="mybooking-campers_carousel-item">
+													<?php
+														$camper_thumbnail = wp_get_attachment_image(
+															$camper_details_photos_url_array[$i],
+															'medium',
+															false,
+															[
+																'class' => 'mybooking-campers_carousel-thumbnail',
+																'alt' => get_the_title(),
+																'data-full-size' => wp_get_attachment_url( $camper_details_photos_url_array[$i] )
+															]
+														);
+														echo wp_kses_post( $camper_thumbnail );
+													?>
+												</div>
+											<?php } ?>
+										</div>
+									<?php } ?>
 								</div>
 							<?php } ?>
 
