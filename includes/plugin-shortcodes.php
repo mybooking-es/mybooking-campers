@@ -45,19 +45,13 @@ function mybooking_campers_shortcode() {
     } ?>
 
     <div class="mb-shortcode mybooking-campers">
-    	<div class="mb-container">
-    		<div class="mb-row">
-    			<div class="mb-col-md-12">
-            <div class="mybooking-campers_grid">
+      <div class="mybooking-campers_grid">
 
-              <?php while( $campers_loop->have_posts() ) {
-                  $campers_loop->the_post();
-                  include('templates/loop-part.php');
-              } ?>
+        <?php while( $campers_loop->have_posts() ) {
+            $campers_loop->the_post();
+            include('templates/loop-part.php');
+        } ?>
 
-            </div>
-          </div>
-        </div>
       </div>
     </div>
 

@@ -1259,236 +1259,37 @@
     unset( $wp_meta_boxes['post']['advanced'] );
   }
 
-  /* Camper Gallery scripts
+  /* Camper Gallery scripts - enqueue external files
    */
-  function mybooking_camper_gallery_styles_scripts() {
-?>
-<style type="text/css">
-  // Gallery
+  function mybooking_camper_gallery_styles_scripts( $hook ) {
 
-.gallery_area {
-    float:right;
-}
+    global $post;
 
-.image_container {
-    float:left!important;
-    width: 120px;
-    background: url('https://i.hizliresim.com/dOJ6qL.png');
-    height: 120px;
-    background-repeat: no-repeat;
-    background-size: cover;
-    border-radius: 3px;
-    cursor: pointer;
-}
-
-.image_container img{
-    height: 120px;
-    width: 120px;
-    object-fit: cover;
-    border-radius: 3px;
-}
-
-.clear {
-  clear:both;
-}
-
-.gallery_wrapper {
-    width: 100%;
-    height: auto;
-    position: relative;
-    display: inline-block;
-}
-
-.gallery_wrapper input[type=text] {
-    width:300px;
-}
-
-.gallery_wrapper .gallery_single_row {
-    float: left;
-    display:inline-block;
-    width: 120px;
-    position: relative;
-    margin-right: 8px;
-    margin-bottom: 20px;
-}
-
-.dolu {
-    display: inline-block!important;
-}
-
-.gallery_wrapper label {
-    padding:0 6px;
-}
-
-.button.remove {
-    background: none;
-    color: red;
-    position: absolute;
-    border: none;
-    top: 4px;
-    right: 7px;
-    font-size: 1.2em;
-    padding: 0px;
-    box-shadow: none;
-}
-
-.button.remove:hover {
-    background: none;
-    color: #fff;
-}
-
-.button.add {
-    background: #c3c2c2;
-    color: #ffffff;
-    border: none;
-    box-shadow: none;
-    width: 120px;
-    height: 120px;
-    line-height: 120px;
-    font-size: 4em;
-}
-
-.button.add:hover, .button.add:focus {
-    background: #e2e2e2;
-    box-shadow: none;
-    color: #0f88c1;
-    border: none;
-}
-</style>
-<script type="text/javascript">
-    // Media uploader
-    var media_uploader = null;
-
-    /**
-     * Remove single image
-     */
-    function remove_single_image(selectorImg, selectorHidden, selectorAddButton, selectorRemoveButton) {
-
-      jQuery(selectorImg).hide();
-      jQuery(selectorAddButton).show();
-      jQuery(selectorRemoveButton).hide();
-      // Prepare the hidden field to hold the ID
-      jQuery(selectorHidden).val('');
-
+    if ( !isset($post) || ( $hook !== 'post.php' && $hook !== 'post-new.php' ) ) {
+      return;
     }
 
-    /**
-     * Single image uploader
-     */
-    function open_media_uploader_single_image(selectorImg, selectorHidden, selectorAddButton, selectorRemoveButton) {
-
-      // Uploader
-      media_uploader = wp.media({
-        frame:    "post",
-        state:    "insert",
-        multiple: false
-      });
-      media_uploader.on("insert", function(){
-
-        var length = media_uploader.state().get("selection").length;
-
-        if (length == 1) {
-          var image = media_uploader.state().get("selection").models[0];
-          var image_id = image.attributes.id;
-          var image_url = image.changed.url;
-          jQuery(selectorImg).attr('src', image_url);
-          jQuery(selectorImg).show();
-          jQuery(selectorAddButton).hide();
-          jQuery(selectorRemoveButton).show();
-          // Prepare the hidden field to hold the ID
-          jQuery(selectorHidden).val(image_id);
-        }
-
-      });
-      media_uploader.open();
-
+    if ( $post->post_type !== 'camper' ) {
+      return;
     }
 
-    /**
-     * Remove Image
-     */
-    function remove_img(value) {
-      var parent=jQuery(value).parent().parent();
-      parent.remove();
-    }
+    // CSS
+    wp_enqueue_style(
+      'mybooking-camper-gallery-style',
+      plugin_dir_url( __FILE__ ) . 'assets/css/mybooking-camper-metabox-gallery.css',
+      array(),
+      '1.0.0'
+    );
 
-    /**
-     * Uploader image
-     */
-    function open_media_uploader_image(obj){
-      // Upload image
-      media_uploader = wp.media({
-        frame:    "post",
-        state:    "insert",
-        multiple: false
-      });
-      media_uploader.on("insert", function(){
-        var json = media_uploader.state().get("selection").first().toJSON();
-        var image_url = json.url;
-        var image_id = json.id;
-        var html = '<img class="gallery_img_img" src="'+image_url+'" height="55" width="55" onclick="open_media_uploader_image_this(this)"/>';
-        jQuery(obj).append(html);
-        // Prepare the hidden field to hold the ID
-        jQuery(obj).find('.meta_image_url').val(image_id);
-      });
-      media_uploader.open();
-    }
+    // JS
+    wp_enqueue_script(
+      'mybooking-camper-gallery-script',
+      plugin_dir_url( __FILE__ ) . 'assets/js/mybooking-camper-metabox-gallery.js',
+      array( 'jquery', 'jquery-ui-sortable' ),
+      '1.0.0',
+      true
+    );
 
-    /**
-     * Uploader image
-     */
-    function open_media_uploader_image_this(obj){
-      // Change image
-      media_uploader = wp.media({
-        frame:    "post",
-        state:    "insert",
-        multiple: false
-      });
-      media_uploader.on("insert", function(){
-        var json = media_uploader.state().get("selection").first().toJSON();
-        var image_url = json.url;
-        var image_id = json.id;
-        jQuery(obj).attr('src',image_url);
-        // Prepare the hidden field to hold the ID
-        jQuery(obj).siblings('.meta_image_url').val(image_id);
-      });
-      media_uploader.open();
-    }
-
-    /**
-     * Append image
-     */
-    function open_media_uploader_image_plus(){
-      // Uploader
-      media_uploader = wp.media({
-        frame:    "post",
-        state:    "insert",
-        multiple: true
-      });
-      media_uploader.on("insert", function(){
-
-        var length = media_uploader.state().get("selection").length;
-        var images = media_uploader.state().get("selection").models;
-
-        for(var i = 0; i < length; i++){
-          var image_id = images[i].attributes.id;
-          var image_url = images[i].changed.url;
-          var box = jQuery('#master_box').html();
-          jQuery(box).appendTo('#img_box_container');
-          var element = jQuery('#img_box_container .gallery_single_row:last-child').find('.image_container');
-          var html = '<img class="gallery_img_img" src="'+image_url+'" height="55" width="55" onclick="open_media_uploader_image_this(this)"/>';
-          element.append(html);
-          // Prepare the hidden field to hold the ID
-          element.find('.meta_image_url').val(image_id);
-        }
-      });
-      media_uploader.open();
-    }
-    jQuery(function() {
-      jQuery("#img_box_container").sortable(); // Activate jQuery UI sortable feature
-    });
-    </script>
-<?php
   }
 
   // Add metaboxes
@@ -1498,5 +1299,4 @@
   // Edit form after title
   add_action('edit_form_after_title', 'mybooking_move_camper_metabox');
   // Add Scripts
-  add_action( 'admin_head-post.php', 'mybooking_camper_gallery_styles_scripts' );
-  add_action( 'admin_head-post-new.php', 'mybooking_camper_gallery_styles_scripts' );
+  add_action( 'admin_enqueue_scripts', 'mybooking_camper_gallery_styles_scripts' );

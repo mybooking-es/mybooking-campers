@@ -27,7 +27,7 @@ defined( 'ABSPATH' ) || exit;
 	$camper_details_solar_panels = get_post_meta( $post->ID, 'camper-details-solar-panels', true );
 ?>
 
-<article <?php post_class(); ?> id="post-<?php the_ID(); ?>">
+<article class="mybooking-campers_grid-item" id="post-<?php the_ID(); ?>">
   <?php $mybooking_permalink = get_permalink(); ?>
 
   <!-- Card content -->

@@ -37,6 +37,7 @@
   width: 100%;
   max-width: 1300px;
   margin: 0 auto;
+  padding: 2rem 1rem;
 }
 
 .mybooking-campers .mb-row {
@@ -309,24 +310,32 @@
 
 /* LOOP */
 
-/* Grid */
-.mybooking-campers_grid {
-  display: flex;
-  justify-content: flex-start;
-	flex-wrap: wrap;
-  margin: 0 0 2rem 0
+/* Container */
+.mybooking-campers {
+  width: 100%;
 }
 
-.mybooking-campers_grid .camper {
-  width: 33.333333333%;
+/* Grid */
+.mybooking-campers .mybooking-campers_grid {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin: 0 0 2rem 0;
+}
+
+.mybooking-campers .mybooking-campers_grid > .mybooking-campers_grid-item {
+  flex: 0 0 33.333%;
+  max-width: 33.333%;
+  box-sizing: border-box;
 }
 
 @media ( max-width: 575.98px ) {
-	.mybooking-campers_grid {
+	.mybooking-campers .mybooking-campers_grid {
 		display: block;
 	}
-	.mybooking-campers_grid .camper {
+	.mybooking-campers .mybooking-campers_grid > .mybooking-campers_grid-item {
 		width: 100%;
+		max-width: 100%;
 	}
 }
 
@@ -568,7 +577,8 @@
 
 .mb-card.mybooking-campers_product-form {
   background-color: var(--mb-lighter-color);
-  padding: 1rem;
+  padding: 0.5rem;
+  overflow: hidden;
 }
 
 /* Carousel */
@@ -651,7 +661,7 @@
 
 /* Sidebar */
 .mybooking-campers_sidebar {
-  padding: 0 1rem;
+  padding: 0;
 }
 
 .mybooking-campers_widget-area {
