@@ -163,7 +163,7 @@ get_header(); ?>
           <div class="mb-row">
 						<!-- The body -->
 
-						<div class="mb-col-md-8">
+						<div class="mb-col-sm-12 mb-col-lg-7">
 
 							<!-- The images -->
 							<?php if( $camper_details_photos_count > 0 ) { ?>
@@ -438,7 +438,7 @@ get_header(); ?>
 
 						<!-- The sidebar -->
 
-						<div class="mb-col-md-4">
+						<div class="mb-col-sm-12 mb-col-lg-5">
 							<div class="mybooking-campers_sidebar">
 
 								<!-- Widgets -->
