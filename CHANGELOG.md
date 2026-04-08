@@ -1,5 +1,11 @@
 # Mybooking Campers plugin Changelog
 
+## 1.0.7
+
+### Fixed
+- Adjust gallery in external JS and CSS files
+
+
 ## 1.0.6
 
 ### Fixed
