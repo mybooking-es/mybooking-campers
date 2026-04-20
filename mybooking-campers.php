@@ -8,7 +8,7 @@
  * Plugin Name:       Mybooking Campers
  * Plugin URI:        https://mybooking.es
  * Description:       Simple plugin to create a Custom Post Type to show camper pages
- * Version:           1.0.6
+ * Version:           1.0.8
  * Author:            Mybooking Team
  * Author URI:        https://mybooking.es
  * License:           GPL-2.0+

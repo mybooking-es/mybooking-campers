@@ -44,7 +44,7 @@ function sea_rent_camper_breadcrumbs() {
         $post_object = sanitize_post( $queried_object );
 
         // Set variables
-        $title          = apply_filters( 'the_title', $post_object->post_title );
+        $title          = apply_filters( 'the_title', $post_object->post_title, $post_object->ID );
         $parent         = $post_object->post_parent;
         $post_type      = $post_object->post_type;
         $post_id        = $post_object->ID;

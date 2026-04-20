@@ -1,5 +1,10 @@
 # Mybooking Campers plugin Changelog
 
+## 1.0.8
+
+### Fixed
+- Problem on breadcrumbs with Gutenkit
+
 ## 1.0.7
 
 ### Fixed
